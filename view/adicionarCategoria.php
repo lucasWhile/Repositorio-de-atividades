@@ -16,7 +16,7 @@
         margin: 60px auto;
         border: none;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      }
+       }
       .form-control:focus {
         border-color: #0d6efd;
         box-shadow: none;
