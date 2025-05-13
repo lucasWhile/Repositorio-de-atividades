@@ -11,7 +11,7 @@
       body {
         background-color: #f8f9fa;
       }
-      .form-card {
+      .form-card { 
         max-width: 400px;
         margin: 60px auto;
         border: none;
