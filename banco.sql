@@ -24,7 +24,7 @@ create table postagem(
     id_postagem INTEGER PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(150) NOT NULL,
     descricao TEXT NOT NULL,
-    imagem VARCHAR(150),
+    imagem VARCHAR(250) NULL,
     data date NOT NULL,
     id_usuario int,
     id_categoria int,

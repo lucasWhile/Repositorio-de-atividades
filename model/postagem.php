@@ -71,7 +71,7 @@ class postagem{
             return []; // Retorna array vazio caso haja erro
         }
 
-}
+    }
 
 
 
@@ -81,6 +81,62 @@ public function apagarPostagem($id){
     $stmt->bindParam(':id', $id);
     $stmt->execute();
 }
+
+
+public function BuscarUnicaPostagem($id) {
+    $conn = $this->conexaoBanco();
+    $stmt = $conn->prepare("SELECT * FROM postagem WHERE id_postagem = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
+        $postagem = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $postagem ?: []; // Retorna array vazio se não encontrar
+    } else {
+        return []; // Retorna array vazio em caso de erro na execução
+    }
+}
+
+
+public function EditarPostagem($id)  {
+
+    $conn = $this->conexaoBanco();
+    $stmt = $conn->prepare("UPDATE postagem SET titulo=:titulo, descricao=:descricao,imagem=:imagem WHERE id_postagem=:id_postagem");
+    $stmt->bindParam(':titulo', $this->titulo);
+    $stmt->bindParam(':descricao', $this->descricao);
+    $stmt->bindParam(':imagem', $this->imagem);
+    $stmt->bindParam(':id_postagem', $id);
+
+    $stmt->execute();
+  
+}
+
+public function ObterId_categoria($id_postagem)  {
+
+$conn = $this->conexaoBanco();
+
+// Preparar a consulta SQL com a correção da cláusula WHERE
+$stmt = $conn->prepare("SELECT categorias.id_categoria AS id_categoria 
+                        FROM categorias 
+                        INNER JOIN postagem ON categorias.id_categoria = postagem.id_categoria 
+                        WHERE postagem.id_postagem = :id");
+
+// Vincular o parâmetro :id à variável $id_postagem
+$stmt->bindParam(':id', $id_postagem, PDO::PARAM_INT);
+
+// Executar a consulta
+$stmt->execute();
+
+// Obter o resultado
+ $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$id_categoria = $resultado[0]['id_categoria'];  
+
+// Se você quiser retornar os resultados
+return $id_categoria;
+
+    
+}
+
+
 
 
 }

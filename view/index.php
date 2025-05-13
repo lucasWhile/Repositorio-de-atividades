@@ -124,7 +124,7 @@ $categorias= $categoria->listarCategorias();
             <div class="mt-auto d-flex">
             <?php 
                 if(isset($_SESSION['id_usuario']) && $_SESSION['nivel']==='instrutor'){ ?>
-                  <a href="../controller/usuario/sair.php" class="btn btn-outline-secondary mt-2 mt-lg-0">Editar</a>
+                  <a href="editarPostagem.php?id_postagem=<?php echo $postagem['id_postagem'] ?>" class="btn btn-outline-danger mt-2 mt-lg-0">Editar</a>
                   <a href="../controller/postagem/apagarPostagem.php?id_postagem=<?php echo $postagem['id_postagem'] ?>" class="btn btn-outline-danger mt-2 mt-lg-0">Apagar</a>
                 <?php }  ?>
                 
