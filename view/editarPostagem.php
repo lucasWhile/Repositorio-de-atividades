@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../model/categoria.php';
 include '../model/postagem.php';
 
@@ -45,9 +46,17 @@ $dadosPostagem= $postagem->BuscarUnicaPostagem($id_postagem);
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
       <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#">Social Network</a>
+        <a class="navbar-brand fw-bold" href="index.php">Social Network</a>
       </div>
     </nav>
+
+          <?php
+      if (isset($_SESSION['msg'])) {
+          echo '<div class="alert alert-success">' . $_SESSION['msg'] . '</div>';
+          unset($_SESSION['msg']);
+      }
+      ?>
+
 
     <!-- Formulário de Post -->
     <div class="card form-card">

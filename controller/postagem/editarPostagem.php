@@ -1,49 +1,38 @@
 <?php
 
+session_start();
 include '../../model/postagem.php';
 include '../../model/categoria.php';
 
-    $id_postagem = $_POST['id_postagem'];
-    $categoria = $_POST['categoria'];
-    $titulo = $_POST['titulo'];
-    $descricao = $_POST['descricao'];
+$id_postagem = $_POST['id_postagem'];
+$id_categoria = $_POST['categoria'];
+$titulo = $_POST['titulo'];
+$descricao = $_POST['descricao'];
 
-    // Obter a imagem (se houver)
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
-        // Definir o diretório onde a imagem será salva
-        $diretorio = '../../uploads/';
-        $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-        $nomeImagem = uniqid() . '.' . $extensao;
-        
-        // Mover a imagem para o diretório
-        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $diretorio . $nomeImagem)) {
-             $imagem = $nomeImagem;
-        } else {
-            // Caso a imagem não seja carregada corretamente
-            echo "Erro ao fazer upload da imagem.";
-            exit;
-        }
-    } else {
-        // Caso não haja uma imagem nova, manter a imagem existente
-        $imagem = $_FILES['imagem']['name'];// Ou você pode definir outro campo para manter a imagem antiga
-    }
-
+// Verifica se uma nova imagem foi enviada
+if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
+    $diretorio = '../../uploads/';
+    $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+    $nomeImagem = uniqid() . '.' . $extensao;
     
-    $postagemEditada= new postagem($titulo, $descricao, $imagem, '','','');
+    if (move_uploaded_file($_FILES['imagem']['tmp_name'], $diretorio . $nomeImagem)) {
+        $imagem = $nomeImagem;
+    } else {
+        echo "Erro ao fazer upload da imagem.";
+        exit;
+    }
+} else {
+    // Se não enviou nova imagem, mantém a imagem atual enviada no campo oculto
+    $imagem = $_POST['imagem_atual'];
+}
 
-    $postagemEditada->EditarPostagem($id_postagem);
+$postagemEditada = new postagem($titulo, $descricao, $imagem, '', '', $id_categoria);
 
-    $id_categoria=$postagemEditada->ObterId_categoria($id_postagem);
+$postagemEditada->EditarPostagem($id_postagem);
 
-    //$mudarCategoria= new categoria();
+$_SESSION['msg']='edição salva com sucesso';
 
-  
-
-
-
-
-
-
+header("Location:../../view/editarPostagem.php?id_postagem=$id_postagem");
 
     
 

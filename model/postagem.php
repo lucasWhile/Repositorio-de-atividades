@@ -100,10 +100,12 @@ public function BuscarUnicaPostagem($id) {
 public function EditarPostagem($id)  {
 
     $conn = $this->conexaoBanco();
-    $stmt = $conn->prepare("UPDATE postagem SET titulo=:titulo, descricao=:descricao,imagem=:imagem WHERE id_postagem=:id_postagem");
+    $stmt = $conn->prepare("UPDATE postagem SET titulo=:titulo, descricao=:descricao,imagem=:imagem,id_categoria=:id_categoria WHERE id_postagem=:id_postagem");
     $stmt->bindParam(':titulo', $this->titulo);
     $stmt->bindParam(':descricao', $this->descricao);
     $stmt->bindParam(':imagem', $this->imagem);
+      $stmt->bindParam(':id_categoria',$this->id_categoria);
+
     $stmt->bindParam(':id_postagem', $id);
 
     $stmt->execute();

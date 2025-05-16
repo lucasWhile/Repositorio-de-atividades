@@ -48,6 +48,50 @@ class categoria
     }
 
 
+       public function MudarCategoria($novaCategoria,$id){
+        $conn = $this->conexaoBanco();
+
+        $stmt = $conn->prepare("UPDATE categorias set nome=:novaCategoria where id_categoria=:id");
+
+        $stmt->bindParam(':novaCategoria',$novaCategoria);
+        $stmt->bindParam(':id',$id_categoria);
+        $stmt->execute();
+      
+    }
+
+    public function BuscarUnicaCategoria($id){
+    $conn = $this->conexaoBanco();
+
+    $stmt = $conn->prepare("SELECT * FROM categorias WHERE id_categoria = :id");
+
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
+        $categoria = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $categoria ? $categoria : null;
+    } else {
+        return null; // Retorna null em caso de erro
+    }
+    }
+
+
+    public function atualizarCategoria($id, $nome){
+    $conn = $this->conexaoBanco();
+
+    $stmt = $conn->prepare("UPDATE categorias SET nome = :nome WHERE id_categoria = :id");
+
+    $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
+
+
+
+
+
+
+
     
 
 }

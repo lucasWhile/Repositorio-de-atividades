@@ -43,7 +43,7 @@ $categorias= $categoria->listarCategorias();
             <?php 
             if(isset($_SESSION['id_usuario'])){  ?>
             <a href="adicionarPostagem.php" class="btn btn-outline-secondary mt-2 mt-lg-0">Postar Projeto</a>
-            <a href="adicionarCategoria.php" class="btn btn-outline-secondary mt-2 mt-lg-0">Adicionar Categoria</a>
+            <a href="listar_categoria.php" class="btn btn-outline-secondary mt-2 mt-lg-0">Categorias</a>
 
 
 
